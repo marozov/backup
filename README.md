@@ -46,7 +46,7 @@ SSH ключи автоматически отправляются на серв
 Remote: Warning: Permanently added 'backupserver,192.168.10.10' (ECDSA) to the list of known hosts.
 Enter passphrase for key ssh://borg@backupserver/var/backup/repo/client: 
 ```
-удаkbv директорию
+удаляю директорию
 ```
 rm -rf /etc/yum
 ```
