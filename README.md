@@ -1,5 +1,4 @@
-# Домашнее задание
-## Настраиваем бэкапы
+#Настраиваем бэкапы
 
 Все дальнейшие действия были проверены при использовании
 ```
@@ -7,12 +6,12 @@ marozov@iMac-marozov ~ % vagrant -v
 Vagrant 2.2.19
 ```
 ```
-marozov@imac logs % vboxmanage -v
+marozov@imac backup % vboxmanage -v
 6.1.32r149290
 ```
 CentOS Linux release 7.8 из Vagrant Cloud
 ```
-[vagrant@log ~]$ cat /etc/redhat-release
+[vagrant@backupserver ~]$ cat /etc/redhat-release
 CentOS Linux release 7.8.2003 (Core)
 ```
 
