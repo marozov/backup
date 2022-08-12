@@ -1,0 +1,68 @@
+---
+- name: "install epel"
+  yum:
+    name:
+      - epel-*
+    state: latest
+
+- name: "Install borg"
+  package: 
+    name:
+      - borgbackup
+    state: latest
+
+- name: "create user borg"
+  user:
+    name: borg
+    comment: borg backup user
+    create_home: yes
+    force: yes
+
+- name: create ssh directory
+  file:
+    path: ~borg/.ssh
+    state: directory
+    mode: '700'
+    owner: borg
+    group: borg
+
+- name: create borg folder
+  file:
+    path: /var/backup/repo
+    state: directory
+    owner: borg
+    group: borg
+
+- name: make folder fo share
+  file:
+    path: /var/share
+    state: directory
+    mode: '777'
+
+- name: "nfsd: Configure exports"
+  copy:
+    src: exports
+    dest: "/etc/exports"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: reload nfsd
+
+- name: ensure nfs server started
+  systemd:
+    name: nfs-server
+    state: started
+    enabled: yes
+
+- name: "Find out if borg repo is initialized"
+  ansible.builtin.stat:
+    path: "/var/backup/repo/client/README"
+  register: borg_data 
+
+- name: init borg repo
+  shell: |
+    export BORG_PASSPHRASE='1234'
+    borg init --encryption=repokey-blake2 /var/backup/repo/client     
+  become: yes
+  become_user: borg
+  when: not borg_data.stat.exists
