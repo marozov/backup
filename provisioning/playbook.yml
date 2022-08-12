@@ -13,7 +13,7 @@
   hosts: backupserver
   become: true
   vars:
-    mount_src: /dev/sdb
+    mount_src: /dev/sda
     mount_path: /var/backup
   pre_tasks:
 
